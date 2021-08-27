@@ -7,12 +7,10 @@ const Bookmark = ({ user, bookedHendler }) => {
     bookedHendler(user._id);
   };
   return (
-    <>
-      <i
-        onClick={bookHendler}
-        className={`bi bi-bookmark${user.booked ? "-fill btn-danger" : ""}`}
-      ></i>
-    </>
+    <i
+      onClick={bookHendler}
+      className={`bi bi-bookmark${user.booked ? "-fill" : ""}`}
+    ></i>
   );
 };
 
