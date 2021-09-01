@@ -3,17 +3,17 @@ import api from "./api";
 import Users from "./components/users";
 
 const App = () => {
-  const initialState = api.users.fetchAll().map((v) => {
-    return { ...v, booked: false };
-  });
+  const initialState = api.users
+    .fetchAll()
+    .map((v) => ({ ...v, booked: false }));
   const [users, setUsers] = useState(initialState);
-  const hendleDelete = (userId) => {
+  const handleDelete = (userId) => {
     setUsers(users.filter((v) => v._id !== userId));
   };
-  const hendleReset = () => {
+  const handleReset = () => {
     setUsers(initialState);
   };
-  const bookedHendler = (userId) => {
+  const bookedHandler = (userId) => {
     const newUsers = users.map((user) => {
       if (user._id === userId) {
         user.booked = !user.booked;
@@ -28,9 +28,9 @@ const App = () => {
     <>
       <Users
         users={users}
-        hendleDelete={hendleDelete}
-        hendleReset={hendleReset}
-        bookedHendler={bookedHendler}
+        handleDelete={handleDelete}
+        handleReset={handleReset}
+        bookedHandler={bookedHandler}
       />
     </>
   );
