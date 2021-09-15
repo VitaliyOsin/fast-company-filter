@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import api from "./api";
 import Users from "./components/users";
 
 const App = () => {
-  const initialState = api.users
-    .fetchAll()
-    .map((v) => ({ ...v, booked: false }));
-  const [users, setUsers] = useState(initialState);
+  const [users, setUsers] = useState();
   const handleDelete = (userId) => {
     setUsers(users.filter((v) => v._id !== userId));
   };
-  const handleReset = () => {
-    setUsers(initialState);
+
+  const handleReset = async () => {
+    let data = await api.users.fetchAll();
+
+    data = data.map((v) => ({ ...v, booked: false }));
+    setUsers(data);
   };
   const bookedHandler = (userId) => {
     const newUsers = users.map((user) => {
@@ -24,14 +25,23 @@ const App = () => {
     setUsers(newUsers);
   };
 
+  useEffect(() => {
+    api.users.fetchAll().then((data) => {
+      data.map((v) => ({ ...v, booked: false }));
+      setUsers(data);
+    });
+  }, []);
+
   return (
     <>
-      <Users
-        users={users}
-        handleDelete={handleDelete}
-        handleReset={handleReset}
-        bookedHandler={bookedHandler}
-      />
+      {users && (
+        <Users
+          users={users}
+          handleDelete={handleDelete}
+          handleReset={handleReset}
+          bookedHandler={bookedHandler}
+        />
+      )}
     </>
   );
 };

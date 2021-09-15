@@ -3,11 +3,11 @@ import { hendlePhrase } from "../api/util";
 import PropTypes from "prop-types";
 
 const SearchStatus = ({ users }) => (
-  <h2 className={"m-2"}>{hendlePhrase(users.length)}</h2>
+  <h2 className={"m-2"}>{hendlePhrase(users)}</h2>
 );
 
 SearchStatus.propTypes = {
-  users:PropTypes.array.isRequired
+  users: PropTypes.number.isRequired,
 };
 
 export default SearchStatus;
