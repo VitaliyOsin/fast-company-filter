@@ -27,20 +27,24 @@ const App = () => {
 
   useEffect(() => {
     api.users.fetchAll().then((data) => {
-      data.map((v) => ({ ...v, booked: false }));
+      data.forEach((v) => ({ ...v, booked: false }));
       setUsers(data);
     });
   }, []);
 
   return (
     <>
-      {users && (
+      {users ? (
         <Users
           users={users}
           handleDelete={handleDelete}
           handleReset={handleReset}
           bookedHandler={bookedHandler}
         />
+      ) : (
+        <div className="d-flex align-items-center justify-content-center m-5 c-primary">
+          Загрузка таблицы...
+        </div>
       )}
     </>
   );

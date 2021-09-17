@@ -127,11 +127,7 @@ const users = [
     rate: 5,
   },
 ];
-/*
-export function fetchAll() {
-  return users;
-}
-*/
+
 const fetchAll = () =>
   new Promise((resolve) => {
     window.setTimeout(function () {

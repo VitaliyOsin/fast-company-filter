@@ -9,13 +9,10 @@ const GroupList = ({
   selectedItem,
 }) => {
   if (Array.isArray(items)) {
-    console.log("Да массив!", items);
-    const items1 = items.reduce((t, v, i) => {
+    items = items.reduce((t, v, i) => {
       t[i] = v;
-      console.log("T: ", t);
       return t;
     }, {});
-    console.log("ITEMS: ", items1);
   }
 
   return (
@@ -26,7 +23,12 @@ const GroupList = ({
           className={
             "list-group-item" + (selectedItem === items[item] ? " active" : "")
           }
-          onClick={() => onItemSelect(items[item])}
+          onClick={() =>
+            onItemSelect({
+              prop: valueProperty,
+              value: items[item][valueProperty],
+            })
+          }
           role="button"
         >
           {items[item][contentProperty]}

@@ -27,10 +27,6 @@ const Users = ({
   }, []);
 
   useEffect(() => {
-    console.log(professions);
-  }, [professions]);
-
-  useEffect(() => {
     setCurrentPage(1);
   }, [selectedProf]);
 
@@ -40,13 +36,14 @@ const Users = ({
   };
 
   const handleProfessionSelect = (item) => {
-    console.log(item);
     setSelectedProf(item);
   };
-
   const filteredUsers = selectedProf
-    ? allUsers.filter((user) => user.profession._id === selectedProf._id)
+    ? allUsers.filter(
+        (user) => user.profession[selectedProf.prop] === selectedProf.value
+      )
     : allUsers;
+
   const users = pagination(filteredUsers, currentPage, pageSize);
   const count = filteredUsers.length;
   const handlePageChange = (page) => {
@@ -70,7 +67,7 @@ const Users = ({
         {count === 0 ? <ResetBtn handleReset={onHandleReset} /> : ""}
       </div>
       <div className="d-flex flex-row">
-        {professions && (
+        {professions ? (
           <div className="d-flex flex-column flex-shrink-0 p-3 mt-4">
             <GroupList
               selectedItem={selectedProf}
@@ -85,6 +82,10 @@ const Users = ({
             >
               Очистить
             </button>
+          </div>
+        ) : (
+          <div className="d-flex flex-row align-items-center justify-content-center">
+            Загрузка...
           </div>
         )}
         <div className="d-flex flex-column p-3">
